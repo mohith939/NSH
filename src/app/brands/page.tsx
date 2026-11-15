@@ -48,15 +48,23 @@ export default function BrandsPage() {
                     <p className="brand-expansion">{brand.mark}</p>
                   ) : null}
                   <p className="brand-entry-note">
-                    Ask NSH about relevant product information and sourcing
-                    enquiries.
+                    {brand.name === "RWD"
+                      ? "Specializing in stereotaxic instruments, inhalation anesthesia, fiber photometry, in vivo imaging, and histology equipment."
+                      : "Ask NSH about relevant product information and sourcing enquiries."}
                   </p>
-                  <Link
-                    className="text-link"
-                    href="/contact"
-                  >
-                    Enquire about {brand.name} <span aria-hidden="true">→</span>
-                  </Link>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                    {brand.name === "RWD" ? (
+                      <Link className="text-link" href="/catalogue">
+                        Browse RWD Catalogue <span aria-hidden="true">→</span>
+                      </Link>
+                    ) : null}
+                    <Link
+                      className="text-link"
+                      href="/contact"
+                    >
+                      Enquire about {brand.name} <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
                 </article>
               ))}
             </div>

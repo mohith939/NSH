@@ -338,13 +338,17 @@ export default function Home() {
             </div>
 
             <div className="selected-products">
-              <h3 className="selected-title">Selected products</h3>
-              {featuredProducts.some((product) => product.sample) && (
-                <p className="sample-note">
-                  Sample listings for layout preview. Brands, models, specifications,
-                  and images are confirmed on request.
-                </p>
-              )}
+              <div className="selected-header-row">
+                <div>
+                  <h3 className="selected-title">Featured RWD Life Science Equipment</h3>
+                  <p className="selected-lead">
+                    Verified flagship systems across stereotaxic surgery, inhalation anesthesia, fiber photometry, and histology.
+                  </p>
+                </div>
+                <Link className="button button-small" href="/catalogue">
+                  View Full Catalogue <Icon name="arrow" size={14} />
+                </Link>
+              </div>
               {featuredProducts.length > 0 ? (
                 <div className="product-grid">
                   {featuredProducts.map((product) => (

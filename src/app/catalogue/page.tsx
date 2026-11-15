@@ -1,43 +1,14 @@
 import Link from "next/link";
-import { EditorialImage } from "@/components/editorial-image";
 import { Icon } from "@/components/icon";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-
-const categories = [
-  "Neuroscience research equipment",
-  "Preclinical research equipment",
-  "Stereotaxic instruments",
-  "Microinjection systems",
-  "Animal anesthesia systems",
-  "Brain matrices and surgical instruments",
-  "Electrophysiology and neural signal acquisition",
-  "Fiber photometry",
-  "Behavioral research equipment",
-  "Laboratory instruments",
-  "Accessories and consumables",
-  "Specialized scientific sourcing",
-];
-
-const categoryIcons = [
-  "brain",
-  "activity",
-  "target",
-  "package",
-  "flask",
-  "microscope",
-  "activity",
-  "flask",
-  "target",
-  "microscope",
-  "package",
-  "globe",
-] as const;
+import { rwdCategories, rwdProducts } from "@/data/rwd-catalogue";
+import { CatalogueClient } from "./catalogue-client";
 
 export const metadata = {
-  title: "Catalogue",
+  title: "Equipment Catalogue | RWD Life Science & Preclinical Solutions",
   description:
-    "Explore scientific equipment categories supported by NSH Scientific Suppliers & Co.",
+    "Explore verified laboratory and preclinical research equipment from RWD Life Science, including stereotaxic frames, animal anesthesia, fiber photometry, in vivo imaging, cell counters, cryostats, and microtomes.",
 };
 
 export default function CataloguePage() {
@@ -45,70 +16,70 @@ export default function CataloguePage() {
     <>
       <SiteHeader />
       <main>
-        <section className="page-hero">
+        {/* Page Hero */}
+        <section className="page-hero catalogue-hero">
           <div className="page-width">
-            <p className="eyebrow">Product catalogue</p>
-            <h1>Find equipment for your research workflow.</h1>
+            <h1 className="eyebrow">Product catalogue · RWD Life Science</h1>
             <p>
-              Browse the areas NSH supports. Product listings are being assembled
-              from verified manufacturer and business information.
+              Browse verified equipment categories and models from RWD Life Science,
+              supported and coordinated across India by NSH Scientific Suppliers &amp; Co.
             </p>
           </div>
         </section>
-        <section className="catalogue-visual">
-          <div className="page-width catalogue-visual-grid">
-            <figure className="catalogue-visual-photo">
-              <EditorialImage
-                src="/images/research-lab-wide.jpg"
-                alt="Researcher working with instruments in a laboratory"
-                priority
-              />
-              <figcaption>
-                Illustrative research setting · not an NSH product image
-              </figcaption>
-            </figure>
-            <div>
-              <p className="eyebrow">Browse by application</p>
-              <h2>Start with the research question.</h2>
-              <p>
-                NSH supports equipment enquiries across neuroscience,
-                preclinical research, electrophysiology, behavioral research, and
-                laboratory workflows.
-              </p>
-              <Link className="button" href="/contact">
-                Ask about equipment <Icon name="arrow" size={17} />
-              </Link>
-            </div>
+
+        {/* Interactive Catalogue Browser */}
+        <section className="catalogue-section section-pad">
+          <div className="page-width">
+            <CatalogueClient categories={rwdCategories} products={rwdProducts} />
           </div>
         </section>
-        <section className="catalogue-section section-pad">
-          <div className="page-width catalogue-grid">
-            <div>
-              <p className="eyebrow">Areas of focus</p>
-              <h2>Research categories</h2>
-              <ul className="category-list">
-                {categories.map((category, index) => (
-                  <li key={category}>
-                    <span className="category-icon">
-                      <Icon name={categoryIcons[index]} size={18} />
-                    </span>
-                    <span>{category}</span>
-                  </li>
-                ))}
-              </ul>
+
+        {/* Procurement & Support Info Banner */}
+        <section className="catalogue-support-section">
+          <div className="page-width">
+            <div className="catalogue-support-grid">
+              <div className="support-card">
+                <span className="support-icon">
+                  <Icon name="package" size={24} />
+                </span>
+                <h3>Direct Quote &amp; Proforma</h3>
+                <p>
+                  Receive official itemized proforma invoices with complete model
+                  specifications, accessories, and warranty terms tailored to institutional grants.
+                </p>
+                <Link className="text-link" href="/contact">
+                  Request custom quotation →
+                </Link>
+              </div>
+
+              <div className="support-card">
+                <span className="support-icon">
+                  <Icon name="activity" size={24} />
+                </span>
+                <h3>On-Site Installation &amp; Training</h3>
+                <p>
+                  Technical assistance with instrument setup, coordinate calibration,
+                  anesthesia safety testing, and software walkthrough for research scholars.
+                </p>
+                <Link className="text-link" href="/services">
+                  Explore technical services →
+                </Link>
+              </div>
+
+              <div className="support-card">
+                <span className="support-icon">
+                  <Icon name="globe" size={24} />
+                </span>
+                <h3>Comprehensive Consumables</h3>
+                <p>
+                  Continuous supply of disposable microtome blades, anesthesia masks,
+                  filter canisters, stereotaxic ear bars, and optical fiber cannulas.
+                </p>
+                <Link className="text-link" href="/contact">
+                  Enquire consumables →
+                </Link>
+              </div>
             </div>
-            <aside className="catalogue-note">
-              <span className="note-marker">Catalogue status</span>
-              <h2>Verified product information is being prepared.</h2>
-              <p>
-                We are not showing unverified product models, images, specifications,
-                stock status, or prices. Share your application or equipment
-                requirement and NSH can help coordinate product information.
-              </p>
-              <Link className="button" href="/contact">
-                Ask about equipment <Icon name="arrow" size={17} />
-              </Link>
-            </aside>
           </div>
         </section>
       </main>

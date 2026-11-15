@@ -1,0 +1,44 @@
+name: Auto-Sync RWD Product Catalogue
+
+on:
+  schedule:
+    # Runs daily at 03:00 UTC (08:30 AM IST)
+    - cron: '0 3 * * *'
+  # Allows you to manually trigger the sync anytime from GitHub -> Actions tab -> "Run workflow"
+  workflow_dispatch:
+
+concurrency:
+  group: sync-rwd-catalogue
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    name: Sync RWD Products
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run RWD catalogue sync script
+        run: npm run sync-rwd
+
+      - name: Commit and push changes if updated
+        run: |
+          if git diff --quiet src/data/rwd-products.json; then
+            echo "No catalogue updates detected from RWD. Skipping commit to conserve Vercel free builds."
+          else
+            echo "New or updated products detected from RWD. Committing updates..."
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add src/data/rwd-products.json
+            git commit -m "chore(catalogue): auto-sync RWD product updates"
+            git push origin main
+          fi
